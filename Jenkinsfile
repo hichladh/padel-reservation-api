@@ -6,8 +6,8 @@ pipeline {
             steps {
                 sh '''
                     docker run --rm \
-                      -v "$WORKSPACE:/app" \
-                      -w /app \
+                      -v jenkins_home:/var/jenkins_home \
+                      -w "$WORKSPACE" \
                       python:3.12-slim \
                       sh -c "pip install --no-cache-dir -r requirements.txt && pytest -v"
                 '''
