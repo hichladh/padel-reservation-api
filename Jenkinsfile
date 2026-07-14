@@ -24,5 +24,18 @@ pipeline {
                 '''
             }
         }
+        
+        stage('Deploy to Kubernetes') {
+        steps {
+            sh '''
+                kubectl set image deployment/padel-api-deployment \
+                  padel-api=padel-reservation-api:${BUILD_NUMBER}
+
+                kubectl rollout status deployment/padel-api-deployment \
+                  --timeout=120s
+            '''
+        }
+    }
+
     }
 }
